@@ -7,6 +7,10 @@ Most of the code should work, and it has been tested well enough. However, witho
 
 Meanwhile, you can check out https://github.com/jasonmamy/cordova-wheel-selector-plugin which seems to be a maintained project with some of the same capabilities as this one.
 
+## Legacy Fork
+
+This is a legacy fork of a wonderful [Multi List Picker](https://github.com/mmnaseri/proton.multi-list-picker) that we needed to make compatible with a legacy AngularJS 1.2 application.
+
 ## Introduction
 
 The multi-list picker is a component that lets you pick a value
