@@ -26,7 +26,37 @@
     };
     var module = angular.module('proton.multi-list-picker', []);
     module.run(['$templateCache', function ($templateCache) {
-        $templateCache.put(templates.picker, "<div class=\'proton-multi-list-picker {{attachment}}\'>\n    <span ng-transclude class=\'proton-multi-list-picker-contents\'></span>\n    <div class=\'before\'></div>\n    <div class=\'container\'>\n        <ul class=\'lists\'>\n            <li class=\'toolbar\'>\n                <a class=\'toolbar-button\' ng-click=\'done({$model: model})\'>Done</a>\n            </li>\n            <li class=\'before-lists\' ng-init=\'first = false\'></li>\n            <li ng-repeat=\'list in items track by $index\'\n                class=\'list-container {{$index == 0 || first ? \"first\" : \"\"}} {{$index == items.length - 1 ? \"last\" : \"\"}}\'\n                data-index=\'{{$index}}\' proton-multi-list-motion data-motion-start=\'motionStart($event)\'\n                data-motion-change=\'motionChange($event)\' data-motion-end=\'motionEnd($event)\'>\n            <span class=\'divider {{!list.value ? \"blank\" : \"\"}}\' ng-if=\'list.$divider\' ng-init=\'first = !list.value\'>\n                <span ng-if=\'!bindHtml\' ng-bind=\'list.value\'></span>\n                <span ng-if=\'bindHtml\' ng-bind-html=\'list.value\'></span>\n            </span>\n                <ul class=\'list\' ng-if=\'!list.$divider\' data-selected=\'{{list.selected}}\'>\n                    <li class=\'item {{item.index == list.selected ? \"selected\" : \"\"}} {{(!list.cycle && list.selected &lt; 3) ? \"offset-down-\" + (3 - list.selected) : \"\"}} {{(list.cycle ? item.cycleIndex : item.index) &lt; list.selected && (list.cycle ? item.cycleIndex : item.index) &gt;= list.selected - 3 ? \"distance-\" + (list.selected - (list.cycle ? item.cycleIndex : item.index)) : \"\"}} {{(list.cycle ? item.cycleIndex : item.index) &gt; list.selected && (list.cycle ? item.cycleIndex : item.index) &lt;= list.selected + 3 ? \"distance-\" + ((list.cycle ? item.cycleIndex : item.index) - list.selected) : \"\"}}\'\n                        ng-repeat=\'item in list.view track by $index\' data-index=\'{{item.index}}\'\n                        ng-click=\'select(list, item.index)\' style=\'width: {{list.width}}px;\'>\n                        <span ng-if=\'item.$placeholder\'></span>\n                        <span ng-if=\'!item.$placeholder && !bindHtml\' ng-bind=\'item.label\'></span>\n                        <span ng-if=\'!item.$placeholder && bindHtml\' ng-bind-html=\'item.label\'></span>\n                    </li>\n                </ul>\n            </li>\n            <li class=\'after-lists\'></li>\n        </ul>\n    </div>\n    <div class=\'after\'></div>\n</div>");
+        $templateCache.put(templates.picker, "<div class=\'proton-multi-list-picker {{attachment}}\'>\n" +
+            "<span ng-transclude class=\'proton-multi-list-picker-contents\'></span>\n" +
+            "<div class=\'before\'></div>\n" +
+            "<div class=\'container\'>\n" +
+            "<ul class=\'lists\'>\n" +
+            "<li class=\'toolbar\'>\n" +
+            "<a class=\'toolbar-button\' ng-click=\'done({$model: model})\'>Done</a>\n" +
+            "</li>\n" +
+            "<li class=\'before-lists\' ng-init=\'first = false\'></li>\n" +
+            "<li ng-repeat=\'list in items track by $index\' \n" +
+            "class=\'list-container {{$index == 0 || first ? \"first\" : \"\"}} {{$index == items.length - 1 ? \"last\" : \"\"}}\' \n" +
+            "data-index=\'{{$index}}\' proton-multi-list-motion \n" +
+            "data-motion-start-it=\'motionStart($event)\' data-motion-change-it=\'motionChange($event)\' data-motion-end-it=\'motionEnd($event)\'>\n" +
+            "<span class=\'divider {{!list.value ? \"blank\" : \"\"}}\' ng-if=\'list.$divider\' ng-init=\'first = !list.value\'>\n" +
+            "<span ng-if=\'!bindHtml\' ng-bind=\'list.value\'></span>\n" +
+            "<span ng-if=\'bindHtml\' ng-bind-html=\'list.value\'></span>\n" +
+            "</span>\n" +
+            "<ul class=\'list\' ng-if=\'!list.$divider\' data-selected=\'{{list.selected}}\'>\n" +
+            "<li class=\'item {{item.index == list.selected ? \"selected\" : \"\"}} {{(!list.cycle && list.selected &lt; 3) ? \"offset-down-\" + (3 - list.selected) : \"\"}} {{(list.cycle ? item.cycleIndex : item.index) &lt; list.selected && (list.cycle ? item.cycleIndex : item.index) &gt;= list.selected - 3 ? \"distance-\" + (list.selected - (list.cycle ? item.cycleIndex : item.index)) : \"\"}} {{(list.cycle ? item.cycleIndex : item.index) &gt; list.selected && (list.cycle ? item.cycleIndex : item.index) &lt;= list.selected + 3 ? \"distance-\" + ((list.cycle ? item.cycleIndex : item.index) - list.selected) : \"\"}}\'\n" +
+            "ng-repeat=\'item in list.view track by $index\' data-index=\'{{item.index}}\'\n" +
+            "ng-click=\'select(list, item.index)\' style=\'width: {{list.width}}px;\'>\n" +
+            "<span ng-if=\'item.$placeholder\'></span>\n" +
+            "<span ng-if=\'!item.$placeholder && !bindHtml\' ng-bind=\'item.label\'></span>\n" +
+            "<span ng-if=\'!item.$placeholder && bindHtml\' ng-bind-html=\'item.label\'></span>\n" +
+            "</li>\n" +
+            "</ul>\n" +
+            "</li>\n" +
+            "<li class=\'after-lists\'></li>\n" +
+            "</ul>\n" +
+            "</div>\n" +
+            "<div class=\'after\'></div>\n</div>");
     }]);
     module.directive('protonMultiListPicker', ["$parse", function ($parse) {
         var controller = function ProtonMultiListPickerController($scope) {
@@ -255,7 +285,7 @@
                             while (pivot < 3) {
                                 var copy = angular.copy(list.array[cursor]);
                                 if (!copy) {
-                                    console.log(cursor);
+                                    //console.log(cursor);
                                 }
                                 copy.index = cursor;
                                 list.view.splice(0, 0, copy);
@@ -280,7 +310,7 @@
                         if (list.view.length > 0) {
                             var cycleIndex = list.view[3].index - 3;
                             angular.forEach(list.view, function (item) {
-                                item.cycleIndex = cycleIndex ++;
+                                item.cycleIndex = cycleIndex++;
                             });
                         }
                     }
@@ -308,6 +338,7 @@
                             }
                         }
                     };
+
                     function setSelection(event) {
                         var direction = -1 * Math.sign(event.speedY);
                         if (direction < 0) {
@@ -317,6 +348,7 @@
                         }
                         $scope.select(list, list.selected);
                     }
+
                     var listElement = function (e) {
                         var element = angular.element(e);
                         while (element.length && !element.hasClass('list-container')) {
@@ -428,11 +460,11 @@
     module.service('protonMultiListMomentum', ["$timeout", function ($timeout) {
         var details = function (event) {
             var description = {
-                event: event,
-                type: event.touches ? "Touch" : "Mouse",
-                x: event.touches ? event.touches[0].screenX : event.screenX,
-                y: event.touches ? event.touches[0].screenY : event.screenY,
-                target: event.touches ? event.touches[0].target : event.target,
+                event: event.originalEvent,
+                type: event.originalEvent.touches ? "Touch" : "Mouse",
+                x: event.originalEvent.touches ? event.originalEvent.touches[0].screenX : event.originalEvent.screenX,
+                y: event.originalEvent.touches ? event.originalEvent.touches[0].screenY : event.originalEvent.screenY,
+                target: event.originalEvent.touches ? event.originalEvent.touches[0].target : event.originalEvent.target,
                 timestamp: Date.now(),
                 xDisplacement: 0,
                 yDisplacement: 0,
@@ -480,7 +512,7 @@
         };
         var coordinates = null;
         this.start = function (event, callback) {
-            if (event.touches && event.touches.length > 1) {
+            if (event.originalEvent.touches && event.originalEvent.touches.length > 1) {
                 return;
             }
             coordinates = details(event);
@@ -496,6 +528,7 @@
             var timeDifference = newCoordinates.timestamp - coordinates.timestamp;
             var xDifference = newCoordinates.x - coordinates.x;
             var yDifference = newCoordinates.y - coordinates.y;
+
             newCoordinates.xDisplacement = xDifference;
             newCoordinates.yDisplacement = yDifference;
             newCoordinates.angle = Math.atan2(newCoordinates.x, newCoordinates.y);
@@ -570,9 +603,9 @@
         return {
             restrict: "A",
             link: function ($scope, $element, $attrs) {
-                var move = $attrs.motionChange && $parse($attrs.motionChange);
-                var end = $attrs.motionEnd && $parse($attrs.motionEnd);
-                var start = $attrs.motionStart && $parse($attrs.motionStart);
+                var move = $attrs.motionChangeIt && $parse($attrs.motionChangeIt);
+                var end = $attrs.motionEndIt && $parse($attrs.motionEndIt);
+                var start = $attrs.motionStartIt && $parse($attrs.motionStartIt);
                 $element.on("mousedown touchstart", function (event) {
                     protonMultiListMomentum.start(event, function (event) {
                         $scope.$apply(function () {
